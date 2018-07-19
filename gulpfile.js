@@ -36,7 +36,7 @@ var browserSync = require('browser-sync').create();
 
 
 //Source
-var SCRIPTS_PATH = 'src/js/{libs,**}/*.js',
+var SCRIPTS_PATH = 'src/{js,jasmine}/{*.js,**/*.js}',
     HTML_PATH = 'src/*.html',
     IMG_PATH = 'src/images/*.{png,jpeg,jpg,gif,svg}',
     SCSS_PATH = 'src/scss/*.scss',
@@ -46,7 +46,7 @@ var SCRIPTS_PATH = 'src/js/{libs,**}/*.js',
 //Distribution
 var DIST_DIR = 'live',
     DIST_CSS = DIST_DIR+'/css',
-    DIST_JS = DIST_DIR+'/js',
+    DIST_JS = DIST_DIR,
     DIST_IMG = DIST_DIR+'/images',
     DIST_AUD = DIST_DIR+'/audio';
 
@@ -98,7 +98,6 @@ gulp.task('scripts-dist',['lint-dist'], function () {
 
     return gulp.src(SCRIPTS_PATH)
         .pipe(babel())
-        .pipe(concat('all.js'))
         .pipe(uglify())
         .pipe(gulp.dest(DIST_JS));
 });
@@ -113,7 +112,6 @@ gulp.task('scripts-dev',['lint-dev'], function () {
     return gulp.src(SCRIPTS_PATH)
         .pipe(srcMaps.init())
         .pipe(babel())
-        .pipe(concat('all.js'))
         .pipe(srcMaps.write())
         .pipe(gulp.dest(TEST_JS));
 });
