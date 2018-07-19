@@ -141,6 +141,24 @@ gulp.task('lint-dev', function () {
         .pipe(eslint.failOnError());
 });
 
+
+
+/*============
+=   Testing  =
+=   Function =
+=============*/
+
+//STILL Needs to be built!
+gulp.task('testing-dist', function () {
+    console.log(strt + 'Testing with Jasmine for dist' + end);
+    
+});
+
+gulp.task('testing-dev', function () {
+    console.log(strt + 'Testing with Jasmine for dev' + end);
+
+});
+
 /*============
 =    HTML    =
 =  for Dist   =
