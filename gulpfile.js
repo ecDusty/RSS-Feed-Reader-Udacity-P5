@@ -36,7 +36,7 @@ var browserSync = require('browser-sync').create();
 
 
 //Source
-var SCRIPTS_PATH = 'src/{js,jasmine}/{*.js,**/*.js}',
+var SCRIPTS_PATH = 'src/js/{*.js,**/*.js}',
     HTML_PATH = 'src/*.html',
     IMG_PATH = 'src/images/*.{png,jpeg,jpg,gif,svg}',
     SCSS_PATH = 'src/scss/*.scss',
