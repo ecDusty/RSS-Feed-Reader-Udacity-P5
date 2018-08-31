@@ -1,3 +1,4 @@
+/* global status, Handlebars, google */
 /* app.js
  *
  * This is our RSS feed reader application. It uses the Google
@@ -56,10 +57,11 @@ function init() {
                      entries = result.feed.entries,
                      entriesLen = entries.length,
                      entryTemplate = Handlebars.compile($('.tpl-entry').html());
+                
 
                  title.html(feedName);   // Set the header text
                  container.empty();      // Empty out all previous entries
-
+                console.log(entriesLen);
                  /* Loop through the entries we just loaded via the Google
                   * Feed Reader API. We'll then parse that entry against the
                   * entryTemplate (created above using Handlebars) and append
@@ -67,6 +69,7 @@ function init() {
                   */
                  entries.forEach(function(entry) {
                      container.append(entryTemplate(entry));
+                     console.log('This Entry has been added:'+ entry +'/b'+'Loading is a: '+status);
                  });
 
                  if (cb) {
@@ -76,7 +79,7 @@ function init() {
        error: function (result, status, err){
                  //run only the callback without attempting to parse result due to error
                  if (cb) {
-                     cb();
+                     cb(result,status,err);
                  }
                },
        dataType: "json"
@@ -93,8 +96,8 @@ google.setOnLoadCallback(init);
  * until the DOM is ready.
  */
 $(function() {
-    var container = $('.feed'),
-        feedList = $('.feed-list'),
+   // var container = $('.feed'),
+    let feedList = $('.feed-list'),
         feedItemTemplate = Handlebars.compile($('.tpl-feed-list-item').html()),
         feedId = 0,
         menuIcon = $('.menu-icon-link');

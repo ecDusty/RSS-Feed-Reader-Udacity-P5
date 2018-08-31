@@ -117,6 +117,18 @@ gulp.task('scripts-dev',['lint-dev'], function () {
 });
 
 /*============
+=   JASMINE  =
+=   Scripts  =
+=   for Dev  =
+=============*/
+gulp.task('jasmine', function () {
+    console.log(strt + 'JASMINE TESTING ENVIRONMENT' + end);
+
+return gulp.src('src/jasmine/{*,**/*,**/**/*}')
+        .pipe(gulp.dest(TEST_DIR+'/jasmine'));
+});
+
+/*============
 =    Lint    =
 =============*/
 gulp.task('lint-dist', function () {
@@ -312,6 +324,7 @@ gulp.task('default', [
     'html-dev',
     'sass-dev',
     'scripts-dev',
+    'jasmine',
     'images-dev',
     'serve:dev'
 ]);
