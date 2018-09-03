@@ -62,7 +62,7 @@ $(function() {
             * hiding/showing of the menu element.
             */
         it('The Menu Is hidden on start', function() {
-            expect.(mBodyClassList.contains('menu-hidden')).toBe(true);
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
         });
             /* TODO: Write a test that ensures the menu changes
             * visibility when the menu icon is clicked. This test
@@ -70,7 +70,15 @@ $(function() {
             * clicked and does it hide when clicked again.
             */
         it('The Menu shows & hides upon a click', function() {
-            expect.(mBodyClassList.contains('menu-hidden')).toBe(true);
+            const menuIcon = document.getElementsByClassName('menu-icon-link')[0]
+
+            console.log(menuIcon);
+            menuIcon.click()
+            console.log(mBodyClassList.contains('menu-hidden'))
+            expect(mBodyClassList.contains('menu-hidden')).not.toBe(true);
+            
+            menuIcon.click()
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
         });
 
     })

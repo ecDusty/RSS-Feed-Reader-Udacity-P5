@@ -69,7 +69,7 @@ function init() {
                   */
                  entries.forEach(function(entry) {
                      container.append(entryTemplate(entry));
-                     console.log('This Entry has been added:'+ entry +'/b'+'Loading is a: '+status);
+                     console.log('This Entry has been added:'+ entry +'/n'+'Loading is a: '+status);
                  });
 
                  if (cb) {
