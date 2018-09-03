@@ -37,7 +37,7 @@ $(function() {
                 expect(feed[value]).not.toBeNull();
             }
         }
-        
+
         it('Feeds have URLs', function() {
             feedCheck('url');
         })
@@ -85,31 +85,49 @@ $(function() {
 
 
     describe('Initial Entries', function() {
-        /* TODO: Write a new test suite named "Initial Entries" */
+       /* TODO: Write a new test suite named "Initial Entries" */
         
         const mBodyClassList = document.getElementsByTagName('body')[0].classList;
 
         beforeEach(function(done) {
-            
+            loadFeed(0,done);
         })
 
         
-        /* TODO: Write a test that ensures when the loadFeed
+       /* TODO: Write a test that ensures when the loadFeed
         * function is called and completes its work, there is at least
         * a single .entry element within the .feed container.
         * Remember, loadFeed() is asynchronous so this test will require
         * the use of Jasmine's beforeEach and asynchronous done() function.
         */
-        it('The Menu Is hidden on start', function() {
-            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
+        it('The Async Articles load with data', function(done) {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
+            expect($('.feed .entry h2').first()[0].innerHTML).not.toBeNull()
+            done()
         });
     
     })
 
+    
+
+        
+    describe('Initial Entries', function() {
     /* TODO: Write a new test suite named "New Feed Selection" */
+        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        beforeEach(function(done) {
+            loadFeed(0,done);
+        })
+
+        it('The Async Articles load with data', function(done) {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
+            expect($('.feed .entry h2').first()[0].innerHTML).not.toBeNull()
+            done()
+        });
+    
+    })
 }());
