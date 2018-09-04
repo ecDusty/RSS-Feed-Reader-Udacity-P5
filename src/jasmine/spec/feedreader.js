@@ -139,19 +139,5 @@ $(function() {
             expect(current-Title).not.toBeEqual($('.header-title').html());
             done()
         });
-    });    
-    describe('Initial Entries', function() {
-        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
-
-        beforeEach(function(done) {
-            loadFeed(0,done);
-        })
-
-        it('The Async Articles load with data', function(done) {
-            expect($('.feed .entry').length).toBeGreaterThan(0);
-            expect($('.feed .entry h2').first()[0].innerHTML).not.toBeNull()
-            done()
-        });
-    
-    })
+    });
 }());
