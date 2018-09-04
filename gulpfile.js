@@ -29,6 +29,7 @@ var imgS = require('gulp-image');
 
 //Servers Dependencies
 var browserSync = require('browser-sync').create();
+var reload = browserSync.reload;
 
 /*============
 = File Paths =
@@ -40,13 +41,14 @@ var SCRIPTS_PATH = 'src/js/{*.js,**/*.js}',
     HTML_PATH = 'src/*.html',
     IMG_PATH = 'src/images/*.{png,jpeg,jpg,gif,svg}',
     SCSS_PATH = 'src/scss/*.scss',
+    JAS_PATH = 'src/jasmine/{*,**/*,**/**/*}',
     AUD_PATH = 'src/audio/*.mp3';
 
 
 //Distribution
 var DIST_DIR = 'live',
     DIST_CSS = DIST_DIR+'/css',
-    DIST_JS = DIST_DIR,
+    DIST_JS = DIST_DIR+'/js',
     DIST_IMG = DIST_DIR+'/images',
     DIST_AUD = DIST_DIR+'/audio';
 
@@ -54,7 +56,7 @@ var DIST_DIR = 'live',
 var TEST_DIR = 'test',
     TEST_CSS = TEST_DIR+'/css',
     TEST_JS = TEST_DIR+'/js',
-    TEST_IMG = TEST_DIR+'/images/*.{png,jpeg,jpg,gif,svg}',
+    TEST_IMG = TEST_DIR+'/images',
     TEST_AUD = TEST_DIR+'/audio';
 
 
@@ -124,7 +126,7 @@ gulp.task('scripts-dev',['lint-dev'], function () {
 gulp.task('jasmine', function () {
     console.log(strt + 'JASMINE TESTING ENVIRONMENT' + end);
 
-return gulp.src('src/jasmine/{*,**/*,**/**/*}')
+return gulp.src(JAS_PATH)
         .pipe(gulp.dest(TEST_DIR+'/jasmine'));
 });
 
@@ -255,12 +257,12 @@ gulp.task('serve:dist', function() {
 
     browserSync.init({
     server: {
-        baseDir: './'+DIST_DIR+'/',
+        baseDir: DIST_DIR+'/',
         domain: 'local.dev'
     }
     });
 
-    gulp.watch([DIST_DIR+'/**/*.css', DIST_DIR+'/**/*.js', DIST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}',DIST_DIR+'/{*.html,**/*.html}']).on('change', browserSync.reload);
+    gulp.watch([DIST_DIR+'/**/*.css', DIST_DIR+'/**/*.js', DIST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}',DIST_DIR+'/{*.html,**/*.html}']).on('change', reload);
 });
 
 /*============
@@ -270,19 +272,19 @@ gulp.task('serve:dist', function() {
 gulp.task('serve:dev', function() {
 
     gulp.watch(SCRIPTS_PATH, ['scripts-dev']);
-    gulp.watch('src/jasmine/{*,**/*,**/**/*}',['jasmine']);
+    gulp.watch(JAS_PATH,['jasmine']);
     gulp.watch(SCSS_PATH, ['sass-dev']);
     gulp.watch(IMG_PATH, ['images-dev']);
     gulp.watch(HTML_PATH, ['html-dev']);
 
     browserSync.init({
         server: {
-        baseDir: './'+TEST_DIR+'/',
+        baseDir: TEST_DIR+'/',
         domain: 'local.dev'
     }
     });
 
-    gulp.watch([TEST_DIR+'/**/*.css', TEST_DIR+'/**/*.js', TEST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}', TEST_DIR+'/{*.html,**/*.html}']).on('change', browserSync.reload);
+    gulp.watch([TEST_DIR+'/**/*.css', TEST_DIR+'/**/*.js', TEST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}', TEST_DIR+'/{*.html,**/*.html}']).on('change', reload);
 });
 
 /*============
