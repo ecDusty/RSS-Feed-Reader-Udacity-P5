@@ -55,8 +55,9 @@ $(function() {
             menuIcon;
 
         beforeEach(function() {
-            mBodyClassList = document.getElementsByTagName('body')[0].classList
-            menuIcon = document.getElementsByClassName('menu-icon-link')[0]
+            // Setting up the elements that'll be used by the tests in this suite
+            mBodyClassList = document.getElementsByTagName('body')[0].classList;
+            menuIcon = document.getElementsByClassName('menu-icon-link')[0];
         })
 
         
@@ -67,8 +68,8 @@ $(function() {
             * hiding/showing of the menu element.
             */
         it('Is hidden on start', function() {
-            expect(mBodyClassList.contains('menu-hidden')).toBe(true)
-        });
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
+        })
 
         /* TODO: Write a test that ensures the menu changes
             * visibility when the menu icon is clicked. This test
@@ -76,12 +77,12 @@ $(function() {
             * clicked and does it hide when clicked again.
             */
         it('Shows & hides upon a click', function() {
-            menuIcon.click()
-            expect(mBodyClassList.contains('menu-hidden')).toBe(false)
+            menuIcon.click();
+            expect(mBodyClassList.contains('menu-hidden')).toBe(false);
             
-            menuIcon.click()
-            expect(mBodyClassList.contains('menu-hidden')).toBe(true)
-        });
+            menuIcon.click();
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
+        })
     })
 
 
@@ -90,7 +91,7 @@ $(function() {
         let feedEnt;
 
         beforeAll(function(done) {
-            loadFeed(0,done)
+            loadFeed(0,done);
         })
 
        /* Test that ensures when the loadFeed
@@ -100,38 +101,38 @@ $(function() {
         * the use of Jasmine's beforeEach and asynchronous done() function.
         */
         it('The async articles have loaded', function(done) {
-            feedEnt = $('.feed .entry')
-            expect(feedEnt[0]).toBeDefined
-            expect(feedEnt.length).toBeGreaterThan(0)
-            done()
+            feedEnt = $('.feed .entry');
+            expect(feedEnt[0]).toBeTruthy();
+            expect(feedEnt.length).toBeGreaterThan(0);
+            done();
         })
 
 
         it('The async article loads with Title data', function(done) {
-            feedEnt = $('.feed .entry')
-            expect(feedEnt.find('h2').html()).not.toBe('')
-            done()
+            feedEnt = $('.feed .entry');
+            expect(feedEnt.find('h2').html()).not.toBe('');
+            done();
         })
 
        /* Test that ensures when the loadFeed
         * The description text is loaded with the titles
         */
         it('The async articles load with description data', function(done) {
-            feedEnt = $('.feed .entry')
+            feedEnt = $('.feed .entry');
             feedEnt.each(function(){
-                expect($(this).find('p')[0]).toBeTruthy()
-                expect($(this).find('p').html()).not.toBe('')
+                expect($(this).find('p')[0]).toBeTruthy();
+                expect($(this).find('p').html()).not.toBe('');
             })
-            done()
+            done();
         })
 
         /* Test to ensure all RSS feed articles have included a link.
          */
         it('The articles came with links', function(done) {
             $('.feed .entry-link a').each(function(){
-                expect($(this).attr('href')).not.toBe('')
+                expect($(this).attr('href')).not.toBe('');
             })
-            done()
+            done();
         })
 
         /* Test to all description texts are hidden when feeds are loaded.
@@ -139,16 +140,16 @@ $(function() {
          */
         it('Each article description is hidden on load', function(done) {
             $('.feed .entry-link').each(function(){
-                expect($(this)[0].classList.contains('hide-description')).toBeTruthy()
+                expect($(this)[0].classList.contains('hide-description')).toBeTruthy();
             })
-            done()
+            done();
         })
 
         /* Test to see if description texts are shown & hidden when drop-down-icon is clicked.
          * This looks to see if the hide-description class has been removed on first click, and added on the second.
          */
         it('Article description shows on click, then hides again', function(done) {
-            var feed_item = $('.feed .entry-link')[0]
+            var feed_item = $('.feed .entry-link')[0],
                 drop_down_icon = $('.feed .entry-link').find('.drop-down-icon')[0];
 
             drop_down_icon.click();
@@ -157,7 +158,7 @@ $(function() {
             drop_down_icon.click();
             expect(feed_item.classList.contains('hide-description')).toBeTruthy();
 
-            done();
+            done();;
         })
     })
 
@@ -174,21 +175,21 @@ $(function() {
          * It's important to note that this test will fail, if the menu isn't tested fast enough (As jasmine has a timer to fail a test if it doens't pass within a certain time).
          */
         beforeEach(function(done) {
-            feedList = $('.feed-list')
+            feedList = $('.feed-list');
             
 
             feedList.on('click','a',function() {
                 const feed = $(this);
                 $('.header-title').html(''); //Set title to null, which will be reset by the async data loaded
-                Current_Title = $('.header-title').html() //Save title for comparison
-                loadFeed(feed.data('id'),done)
+                Current_Title = $('.header-title').html(); //Save title for comparison
+                loadFeed(feed.data('id'),done);
             })
-        });
+        })
 
         // The Testing part
         it('New info from feed updated', function(done) {
-            expect($('.header-title').html()).not.toBe(Current_Title)
-            done()
-        });
-    });
-}());
+            expect($('.header-title').html()).not.toBe(Current_Title);
+            done();
+        })
+    })
+}())
