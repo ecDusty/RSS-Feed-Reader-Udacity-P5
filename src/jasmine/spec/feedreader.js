@@ -110,15 +110,39 @@ $(function() {
 
     
 
-        
-    describe('Initial Entries', function() {
-    /* TODO: Write a new test suite named "New Feed Selection" */
-        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
-
+    describe('New Feed Selection', function() {
+        /* TODO: Write a new test suite named "New Feed Selection" */
+    
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        beforeEach(done) {
+            var feedList = $('.feed-list'),
+                done_this = done,
+                Current_Title = '';
+
+            
+            feedList.on('click','a',function() {
+                var done_that = done_this,
+                    feed = $(this);
+                Current_Title = $('.header-title').html()
+                
+                console.log('Click happened, title is: ' + Current_Title)
+                loadFeed(feed.data('id'),done_that);
+                return(false);
+            })
+        }
+
+        it('are defined', function(done) {
+            console.log($('.header-title').html())
+            expect(current-Title).not.toBeEqual($('.header-title').html());
+            done()
+        });
+    });    
+    describe('Initial Entries', function() {
+        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
+
         beforeEach(function(done) {
             loadFeed(0,done);
         })
