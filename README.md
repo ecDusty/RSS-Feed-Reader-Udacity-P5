@@ -1,6 +1,38 @@
 # Project Overview
 
-In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
+In this project I was given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
+
+
+## How to get this project Running
+
+This RSS feed reader has already been built into the **live** folder. If you'd like to make this simple app your own, just edit the files within the **src** folder.
+
+To get started, you'll first need to get gulp up and running. Follow these steps:
+
+1) Ensure [Node JS](https://nodejs.org/en/) is installed on your system (As this will come with the required npm built in).
+
+2) Open your command line/ git console. Make sure to travel to the folder that this repository is in.
+
+3) Run the function `npm install`. Once this is finnished, than run `npm install gulp -g`
+
+4) Once everything is installed, you just need to use the function gulp. You'll be able to start editing the source code, and it'll create the required hostable files in the test folder.
+
+5) Once you're done, run `gulp dist`. This will create the distribution ready code of your custom memory game.
+
+I hope you enjoy this build. Always happy to receive input and ideas.
+
+
+# Resources
+
+1. [Jasmine Intro](https://jasmine.github.io/2.1/introduction): I used this alot to learn how jasmine worked, and how I could create custom functions for my required needs.
+
+## Dependencies
+
+1. Font icomoon: provided by Udacity for App build
+2. [Jasmine](https://github.com/jasmine/jasmine#installation): followed the instructions for adding Jasmine into the HTML file.
+3. Gulp (For build)
+4. SASS (For build)
+5. BABEL (For build)
 
 
 ## Why this Project?
