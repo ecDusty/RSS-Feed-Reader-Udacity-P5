@@ -121,12 +121,20 @@ gulp.task('scripts-dev',['lint-dev'], function () {
 /*============
 =   JASMINE  =
 =   Scripts  =
-=   for Dev  =
+=   for Dev & Dist  =
 =============*/
-gulp.task('jasmine', function () {
+gulp.task('jasmine-dev', function () {
     console.log(strt + 'JASMINE TESTING ENVIRONMENT' + end);
 
 return gulp.src(JAS_PATH)
+        .pipe(gulp.dest(TEST_DIR+'/jasmine'));
+});
+
+gulp.task('jasmine-dist', function () {
+    console.log(strt + 'JASMINE TESTING ENVIRONMENT' + end);
+
+return gulp.src(JAS_PATH)
+        .uglify()
         .pipe(gulp.dest(TEST_DIR+'/jasmine'));
 });
 
@@ -251,9 +259,10 @@ gulp.task('images-dev', function () {
 gulp.task('serve:dist', function() {
 
     gulp.watch(SCRIPTS_PATH, ['scripts-dist']);
-    gulp.watch(HTML_PATH, ['html-dist']);
+    gulp.watch(JAS_PATH,['jasmine-dist']);
     gulp.watch(SCSS_PATH, ['sass-dist']);
     gulp.watch(IMG_PATH, ['images-dist']);
+    gulp.watch(HTML_PATH, ['html-dist']);
 
     browserSync.init({
     server: {
@@ -272,7 +281,7 @@ gulp.task('serve:dist', function() {
 gulp.task('serve:dev', function() {
 
     gulp.watch(SCRIPTS_PATH, ['scripts-dev']);
-    gulp.watch(JAS_PATH,['jasmine']);
+    gulp.watch(JAS_PATH,['jasmine-dev']);
     gulp.watch(SCSS_PATH, ['sass-dev']);
     gulp.watch(IMG_PATH, ['images-dev']);
     gulp.watch(HTML_PATH, ['html-dev']);
@@ -303,7 +312,7 @@ gulp.task('clean', function () {
 =      Ready Site     =
 =         Task        =
 =====================*/
-gulp.task('dist', ['html-dist', 'sass-dist', 'resources-dist','scripts-dist', 'images-dist'], function () {
+gulp.task('dist', ['html-dist', 'sass-dist','jasmine-dist', 'resources-dist','scripts-dist', 'images-dist'], function () {
     console.log('>---- Distribution  folder Created ----<');
 });
 
@@ -327,7 +336,7 @@ gulp.task('default', [
     'clean',
     'sass-dev',
     'scripts-dev',
-    'jasmine',
+    'jasmine-dev',
     'resources-dev',
     'images-dev',
     'html-dev',
