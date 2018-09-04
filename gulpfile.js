@@ -304,11 +304,11 @@ gulp.task('export', ['html-dist', 'sass-dist', 'scripts-dist', 'images-dist'], f
 //This function will clean out your distribution folder, and then update it with all the recent changes. After running this, it's best to run 'gulp serve' to get your live preview playing.
 gulp.task('default', [
     'clean',
-    'html-dev',
     'sass-dev',
     'scripts-dev',
     'jasmine',
     'images-dev',
+    'html-dev',
     'serve:dev'
 ]);
 
