@@ -152,6 +152,25 @@ gulp.task('lint-dev', function () {
 });
 
 /*============
+=            =
+=  RESOURCES =
+=            =
+=============*/
+gulp.task('resources-dev', function () {
+    console.log(strt + 'Moving project required resources' + end);
+
+return gulp.src('src/fonts/{*,**/*,**/**/*}')
+        .pipe(gulp.dest(TEST_DIR+'/fonts'));
+});
+
+gulp.task('resources-dist', function () {
+    console.log(strt + 'Moving project required resources' + end);
+
+return gulp.src('src/fonts/{*,**/*,**/**/*}')
+        .pipe(gulp.dest(DIST_DIR+'/fonts'));
+});
+
+/*============
 =    HTML    =
 =  for Dist   =
 =============*/
@@ -241,7 +260,7 @@ gulp.task('serve:dist', function() {
     }
     });
 
-    gulp.watch([DIST_DIR+'/{*.html,**/*.html}', DIST_DIR+'/**/*.css', DIST_DIR+'/**/*.js', DIST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}']).on('change', browserSync.reload);
+    gulp.watch([DIST_DIR+'/**/*.css', DIST_DIR+'/**/*.js', DIST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}',DIST_DIR+'/{*.html,**/*.html}']).on('change', browserSync.reload);
 });
 
 /*============
@@ -251,10 +270,10 @@ gulp.task('serve:dist', function() {
 gulp.task('serve:dev', function() {
 
     gulp.watch(SCRIPTS_PATH, ['scripts-dev']);
-    gulp.watch(HTML_PATH, ['html-dev']);
+    gulp.watch('src/jasmine/{*,**/*,**/**/*}',['jasmine']);
     gulp.watch(SCSS_PATH, ['sass-dev']);
     gulp.watch(IMG_PATH, ['images-dev']);
-    gulp.watch('src/jasmine/{*,**/*,**/**/*}',['jasmine']);
+    gulp.watch(HTML_PATH, ['html-dev']);
 
     browserSync.init({
         server: {
@@ -263,7 +282,7 @@ gulp.task('serve:dev', function() {
     }
     });
 
-    gulp.watch([TEST_DIR+'/{*.html,**/*.html}', TEST_DIR+'/**/*.css', TEST_DIR+'/**/*.js', TEST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}']).on('change', browserSync.reload);
+    gulp.watch([TEST_DIR+'/**/*.css', TEST_DIR+'/**/*.js', TEST_DIR+'/**/*.{png,jpeg,jpg,gif,svg}', TEST_DIR+'/{*.html,**/*.html}']).on('change', browserSync.reload);
 });
 
 /*============
@@ -282,7 +301,7 @@ gulp.task('clean', function () {
 =      Ready Site     =
 =         Task        =
 =====================*/
-gulp.task('dist', ['html-dist', 'sass-dist', 'scripts-dist', 'images-dist'], function () {
+gulp.task('dist', ['html-dist', 'sass-dist', 'resources-dist','scripts-dist', 'images-dist'], function () {
     console.log('>---- Distribution  folder Created ----<');
 });
 
@@ -307,6 +326,7 @@ gulp.task('default', [
     'sass-dev',
     'scripts-dev',
     'jasmine',
+    'resources-dev',
     'images-dev',
     'html-dev',
     'serve:dev'
