@@ -55,16 +55,21 @@ $(function() {
 
     describe('The menu', function() {
     /* TODO: Write a new test suite named "The menu" */
-        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
-        const menuIcon = document.getElementsByClassName('menu-icon-link')[0]
+        let mBodyClassList,
+            menuIcon;
 
         /* TODO: Write a test that ensures the menu element is
             * hidden by default. You'll have to analyze the HTML and
             * the CSS to determine how we're performing the
             * hiding/showing of the menu element.
             */
+        beforeEach(function() {
+            mBodyClassList = document.getElementsByTagName('body')[0].classList
+            menuIcon = document.getElementsByClassName('menu-icon-link')[0]
+
+        })
         it('The Menu Is hidden on start', function() {
-            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true)
         });
             /* TODO: Write a test that ensures the menu changes
             * visibility when the menu icon is clicked. This test
@@ -74,10 +79,10 @@ $(function() {
         it('The Menu shows & hides upon a click', function() {
 
             menuIcon.click()
-            expect(mBodyClassList.contains('menu-hidden')).toBe(false);
+            expect(mBodyClassList.contains('menu-hidden')).toBe(false)
             
             menuIcon.click()
-            expect(mBodyClassList.contains('menu-hidden')).toBe(true);
+            expect(mBodyClassList.contains('menu-hidden')).toBe(true)
         });
 
     })
@@ -86,11 +91,11 @@ $(function() {
 
     describe('Initial Entries', function() {
        /* TODO: Write a new test suite named "Initial Entries" */
-        
-        const mBodyClassList = document.getElementsByTagName('body')[0].classList;
+        let mBodyClassList
 
         beforeEach(function(done) {
-            loadFeed(0,done);
+            mBodyClassList = document.getElementsByTagName('body')[0].classList
+            loadFeed(0,done)
         })
 
         
@@ -101,42 +106,41 @@ $(function() {
         * the use of Jasmine's beforeEach and asynchronous done() function.
         */
         it('The Async Articles load with data', function(done) {
-            expect($('.feed .entry').length).toBeGreaterThan(0);
+            expect($('.feed .entry').length).toBeGreaterThan(0)
             expect($('.feed .entry h2').first()[0].innerHTML).not.toBeNull()
             done()
-        });
+        })
     
     })
 
     
 
     describe('New Feed Selection', function() {
+        var feedList,
+            Current_Title;
         /* TODO: Write a new test suite named "New Feed Selection" */
     
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        beforeEach(done) {
-            var feedList = $('.feed-list'),
-                done_this = done,
-                Current_Title = '';
-
+        beforeEach(function(done) {
+            feedList = $('.feed-list')
             
             feedList.on('click','a',function() {
-                var done_that = done_this,
-                    feed = $(this);
+                // var done_that = done_this,
+                var    feed = $(this);
                 Current_Title = $('.header-title').html()
                 
-                console.log('Click happened, title is: ' + Current_Title)
-                loadFeed(feed.data('id'),done_that);
-                return(false);
+                console.log('Click happened, title is: \n' + Current_Title + '\n')
+                loadFeed(feed.data('id'),done)
             })
-        }
+        });
 
         it('are defined', function(done) {
-            console.log($('.header-title').html())
-            expect(current-Title).not.toBeEqual($('.header-title').html());
+            console.log('This is the pages live title'+$('.header-title').html())
+            console.log('This was the old title' + Current_Title)
+            expect($('.header-title').html()).not.toBe(Current_Title)
             done()
         });
     });

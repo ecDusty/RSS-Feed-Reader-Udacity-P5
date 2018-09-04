@@ -50,18 +50,16 @@ function init() {
        url: 'https://rsstojson.udacity.com/parseFeed',
        data: JSON.stringify({url: feedUrl}),
        contentType:"application/json",
-       success: function (result, status){
-
+       success: function (result){
                 var container = $('.feed'),
                     title = $('.header-title'),
                     entries = result.feed.entries,
-                    entriesLen = entries.length,
+                    //entriesLen = entries.length,
                     entryTemplate = Handlebars.compile($('.tpl-entry').html());
             
 
                 title.html(feedName);   // Set the header text
                 container.empty();      // Empty out all previous entries
-                console.log(entriesLen);
                 /* Loop through the entries we just loaded via the Google
                 * Feed Reader API. We'll then parse that entry against the
                 * entryTemplate (created above using Handlebars) and append
@@ -69,7 +67,6 @@ function init() {
                 */
                 entries.forEach(function(entry) {
                     container.append(entryTemplate(entry));
-                    console.log('This Entry has been added:'+ entry +'/n'+'Loading is a: '+status);
                 });
 
                 if (cb) {
