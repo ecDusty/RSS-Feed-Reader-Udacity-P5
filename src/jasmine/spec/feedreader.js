@@ -22,26 +22,26 @@ $(function() {
      * page?
      */
         it('are defined', function() {
-            expect(allFeeds).toBeDefined();
+            expect(allFeeds).toBeTruthy();
             expect(allFeeds.length).not.toBe(0);
         });
 
 
+        /* The test function allows for the feedList to grow or shrink and still test the entirety of allFeeds so that all the required data is included. */
         function feedCheck(value) {
             for (const feed of allFeeds) {
                 it('Feed '+ feed +' has a ' + value, function() {
-                    expect(feed).toBeDefined();
                     expect(feed[value]).not.toBe('');
                 })
             }
         }
-        /* TODO: Write a test that loops through each feed
+        /* Test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
         feedCheck('url');
 
-        /* TODO: Write a test that loops through each feed
+        /* Test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
@@ -87,21 +87,77 @@ $(function() {
 
 
     describe('Initial Entries Check', function() {
-       /* TODO: Write a new test suite named "Initial Entries" */
-        beforeEach(function(done) {
+        let feedEnt;
+
+        beforeAll(function(done) {
             loadFeed(0,done)
         })
 
-       /* TODO: Write a test that ensures when the loadFeed
+       /* Test that ensures when the loadFeed
         * function is called and completes its work, there is at least
         * a single .entry element within the .feed container.
         * Remember, loadFeed() is asynchronous so this test will require
         * the use of Jasmine's beforeEach and asynchronous done() function.
         */
-        it('The async articles load with data', function(done) {
-            expect($('.feed .entry').length).toBeGreaterThan(0)
-            expect($('.feed .entry h2').first()[0].innerHTML).not.toBeNull()
+        it('The async articles have loaded', function(done) {
+            feedEnt = $('.feed .entry')
+            expect(feedEnt[0]).toBeDefined
+            expect(feedEnt.length).toBeGreaterThan(0)
             done()
+        })
+
+
+        it('The async article loads with Title data', function(done) {
+            feedEnt = $('.feed .entry')
+            expect(feedEnt.find('h2').html()).not.toBe('')
+            done()
+        })
+
+       /* Test that ensures when the loadFeed
+        * The description text is loaded with the titles
+        */
+        it('The async articles load with description data', function(done) {
+            feedEnt = $('.feed .entry')
+            feedEnt.each(function(){
+                expect($(this).find('p')[0]).toBeTruthy()
+                expect($(this).find('p').html()).not.toBe('')
+            })
+            done()
+        })
+
+        /* Test to ensure all RSS feed articles have included a link.
+         */
+        it('The articles came with links', function(done) {
+            $('.feed .entry-link a').each(function(){
+                expect($(this).attr('href')).not.toBe('')
+            })
+            done()
+        })
+
+        /* Test to all description texts are hidden when feeds are loaded.
+         * To ensure that the description text is hidden, make sure the hide-description class is added to the div.entry-link element
+         */
+        it('Each article description is hidden on load', function(done) {
+            $('.feed .entry-link').each(function(){
+                expect($(this)[0].classList.contains('hide-description')).toBeTruthy()
+            })
+            done()
+        })
+
+        /* Test to see if description texts are shown & hidden when drop-down-icon is clicked.
+         * This looks to see if the hide-description class has been removed on first click, and added on the second.
+         */
+        it('Article description shows on click, then hides again', function(done) {
+            var feed_item = $('.feed .entry-link')[0]
+                drop_down_icon = $('.feed .entry-link').find('.drop-down-icon')[0];
+
+            drop_down_icon.click();
+            expect(feed_item.classList.contains('hide-description')).toBeFalsy();
+
+            drop_down_icon.click();
+            expect(feed_item.classList.contains('hide-description')).toBeTruthy();
+
+            done();
         })
     })
 
@@ -110,23 +166,27 @@ $(function() {
     describe('New Feed Selection Check', function() {
         var feedList,
             Current_Title;
-        /* TODO: Write a new test suite named "New Feed Selection" */
     
-        /* TODO: Write a test that ensures when a new feed is loaded
+        /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
+         * 
+         * It's important to note that this test will fail, if the menu isn't tested fast enough (As jasmine has a timer to fail a test if it doens't pass within a certain time).
          */
         beforeEach(function(done) {
             feedList = $('.feed-list')
             
+
             feedList.on('click','a',function() {
                 const feed = $(this);
-                Current_Title = $('.header-title').html()
+                $('.header-title').html(''); //Set title to null, which will be reset by the async data loaded
+                Current_Title = $('.header-title').html() //Save title for comparison
                 loadFeed(feed.data('id'),done)
             })
         });
 
-        it('are defined', function(done) {
+        // The Testing part
+        it('New info from feed updated', function(done) {
             expect($('.header-title').html()).not.toBe(Current_Title)
             done()
         });

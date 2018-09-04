@@ -33,12 +33,16 @@
         <div class="feed"></div>
 
         <script class="tpl-entry" type="text/x-handlebars-template">
-            <a class="entry-link" href="{{link}}">
+            <div class="entry-link hide-description">
+                <a href="{{link}}">
                 <article class="entry">
+                    <sub>{{pubDate}}</sub>
                     <h2>{{title}}</h2>
-                    <p>{{description}}</p>
+                    <!--<p>{{description}}</p>-->
                 </article>
-            </a>
+                </a>
+                <div class="drop-down-icon"></div>
+            </div>
         </script>
 
         <script class="tpl-feed-list-item" type="text/x-handlebars-template">
