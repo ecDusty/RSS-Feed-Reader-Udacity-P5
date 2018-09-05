@@ -321,7 +321,7 @@ gulp.task('dist', ['html-dist', 'sass-dist','jasmine-dist', 'resources-dist','sc
 =      Ready Site     =
 =         Task        =
 =====================*/
-gulp.task('export', ['html-dist', 'sass-dist', 'scripts-dist', 'images-dist'], function () {
+gulp.task('export', ['dist'], function () {
     return gulp.src('{dist/**,src/**,.babelrc,.eslintrc,gulpfile.js,package.json}')
         .pipe(zip('website.zip'))
         .pipe(gulp.dest('./'));
