@@ -65,9 +65,21 @@ function init() {
                 * entryTemplate (created above using Handlebars) and append
                 * the resulting HTML to the list of entries on the page.
                 */
+                function convertToHTML(data) {
+                    data = new DOMParser().parseFromString(data,'text/html').getElementsByTagName('body')[0].innerHTML; 
+                    return data;
+                }
+
                 entries.forEach(function(entry) {
+                    console.log(entry)
+                    entry.description = convertToHTML(entry.description);
+                    entry.summary = convertToHTML(entry.summary);
+                    console.log(entry);
                     container.append(entryTemplate(entry));
                 });
+                $('.entry-link').on('click','.drop-down-icon',function() {
+                    $(this).parent().toggleClass('hide-description');
+                })
 
                 if (cb) {
                     cb();
@@ -92,6 +104,7 @@ $(function() {
         feedItemTemplate = Handlebars.compile($('.tpl-feed-list-item').html()),
         feedId = 0,
         menuIcon = $('.menu-icon-link');
+
 
     /* Loop through all of our feeds, assigning an id property to
      * each of the feeds based upon its index within the array.

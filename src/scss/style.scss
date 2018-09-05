@@ -87,8 +87,39 @@ h2 {
     margin: 4em 0 0;
 }
 
+.entry-link {
+    position: relative;
+
+    &.hide-description {
+        p {
+            height: 0;
+        }
+    }
+}
+
 .entry {
     border-bottom: 1px solid #ddd;
     padding: 1em;
-    margin: 0.5em 0;
+    margin: 0.5em 25px 0.5em 0;
+
+    p {
+        overflow: hidden;
+        transition: height 0.25s ease-out;
+    }
+}
+
+.drop-down-icon {
+    position: absolute;
+    width:25px;
+    height:25px;
+    top: 40%;
+    right:0;
+
+    &:after {
+        content: '^';
+    }
+}
+
+.jasmine_html-reporter {
+    margin: 0;
 }
